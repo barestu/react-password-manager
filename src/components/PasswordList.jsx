@@ -36,8 +36,7 @@ class PasswordList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.passman,
-  userId: state.user.userData.id
+  data: state.passman
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

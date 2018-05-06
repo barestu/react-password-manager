@@ -4,15 +4,33 @@ import { bindActionCreators} from 'redux'
 import { showPassword, hidePassword} from '../store/passman/actions'
 
 class PasswordItem extends Component {
-  hidePassword() {
+  censorPass(pass) {
     let censor = '*'
-    let password = this.props.data.password
+    let password = pass
     
     return censor.repeat(password.length)
   }
 
+  showPassword() {
+    let userId = this.props.userId
+    let patch = {
+      ...this.props.data,
+      passHidden: false
+    }
+    this.props.showPassword(userId, patch)
+  }
+
+  hidePassword() {
+    let userId = this.props.userId
+    let patch = {
+      ...this.props.data,
+      passHidden: true
+    }
+    this.props.hidePassword(userId, patch)
+  }
+
   render() {
-    let { passHidden } = this.props
+    let passHidden = this.props.data.passHidden
 
     return (
       <tbody>
@@ -21,13 +39,16 @@ class PasswordItem extends Component {
           <td>{this.props.data.url}</td>
           <td>{this.props.data.username}</td>
           {
-            passHidden ? <td>{this.hidePassword(this.props.data.password)}</td> :
+            passHidden ? <td>{this.censorPass(this.props.data.password)}</td> :
             <td>{this.props.data.password}</td>
           }
           <td>{this.props.data.createdAt}</td>
           <td>{this.props.data.updatedAt}</td>
           <td>
-            <button>Show</button>
+            {
+              passHidden ? <button onClick={this.showPassword.bind(this)}>Show</button> :
+              <button onClick={this.hidePassword.bind(this)}>Hide</button>
+            }
             <button>Edit</button>
             <button>Delete</button>
           </td>
@@ -38,7 +59,7 @@ class PasswordItem extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  passHidden: state.passman
+  userId: state.user.userData.id
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { inputData } from '../store/passman/actions'
+import PasswordWidgets from './PasswordWidgets';
 
 class AddPasswordForm extends Component {
   constructor() {
@@ -10,12 +11,45 @@ class AddPasswordForm extends Component {
       url: '',
       username: '',
       password: '',
+      validPassword: false,
+      containUppercase: false,
+      containLowercase: false,
+      containSpecialChar: false,
+      containNumber: false,
+      containMinLength: false,
+
     }
   }
 
+  handleValidation(typed) {
+    let validPassword = false
+    let containLowercase = new RegExp('^(?=.*[a-z])').test(typed)
+    let containUppercase = new RegExp('^(?=.*[A-Z])').test(typed)
+    let containNumber = new RegExp('(?=.*[0-9])').test(typed)
+    let containSpecialChar = new RegExp('(?=.*[!@#$%^&*])').test(typed)
+    let containMinLength = new RegExp('(?=.{6,})').test(typed)
+
+    if (containUppercase && containLowercase && containSpecialChar && containNumber && containMinLength) {
+      validPassword = true
+    }
+
+    this.setState({
+      ...this.state,
+      validPassword: validPassword,
+      containUppercase: containUppercase,
+      containLowercase: containLowercase,
+      containSpecialChar: containSpecialChar,
+      containNumber: containNumber,
+      containMinLength: containMinLength
+    })
+  }
+
   handleChange(e) {
+    let typed = e.target.value
     this.setState({
       [e.target.name]: e.target.value
+    }, () => {
+      this.handleValidation(typed)
     })
   }
   
@@ -62,6 +96,13 @@ class AddPasswordForm extends Component {
           name="password"
           placeholder="Password" />
         </div>
+        <PasswordWidgets
+          containLowercase={this.state.containLowercase}
+          containUppercase={this.state.containUppercase}
+          containSpecialChar={this.state.containSpecialChar}
+          containNumber={this.state.containNumber}
+          containMinLength={this.state.containMinLength}
+        />
         <div className="form-group">
           <button className="btn btn-secondary">Submit</button>
         </div>

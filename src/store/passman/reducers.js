@@ -9,7 +9,6 @@ import {
 
 const initialState = {
   data: [],
-  passHidden: true,
   loading: false,
   error: {
     status: false,
@@ -47,13 +46,11 @@ const passmanReducers = (state = {...initialState}, action) => {
       }
     case SHOW_PASSMAN_DATA:
       return {
-        ...state,
-        passHidden: false
+        ...state
       }
     case HIDE_PASSMAN_DATA:
       return {
-        ...state,
-        passHidden: true
+        ...state
       }
     default:
       return state

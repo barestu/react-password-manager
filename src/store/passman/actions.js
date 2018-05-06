@@ -50,6 +50,7 @@ const loadDataError = (error) => ({
 export const inputData = (userId, data) => {
   data = {
     ...data,
+    passHidden: true,
     createdAt: firebase.database.ServerValue.TIMESTAMP,
     updatedAt: firebase.database.ServerValue.TIMESTAMP
   }
@@ -70,9 +71,18 @@ const inputDataDone = () => ({
   type: INPUT_PASSMAN_DATA
 })
 
-export const showPassword = () => {
+export const showPassword = (userId, passData) => {
   return dispatch => {
-    dispatch(showPasswordDone())
+    let passId = passData.id
+
+    db.ref(`password/${userId}/${passId}`)
+      .update(passData)
+      .then(result => {
+        dispatch(showPasswordDone())
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 }
 
@@ -80,9 +90,18 @@ const showPasswordDone = () => ({
   type: SHOW_PASSMAN_DATA
 })
 
-export const hidePassword = () => {
+export const hidePassword = (userId, passData) => {
   return dispatch => {
-    dispatch(hidePasswordDone())
+    let passId = passData.id
+
+    db.ref(`password/${userId}/${passId}`)
+      .update(passData)
+      .then(result => {
+        dispatch(hidePasswordDone())
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 }
 
