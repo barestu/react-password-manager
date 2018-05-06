@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { auth } from '../firebase-config'
+import { auth } from '../config/firebase-config'
 
 class RegisterForm extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       email: '',
       password: ''
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
@@ -32,14 +29,14 @@ class RegisterForm extends Component {
 
   render() {
     return (
-      <form className="p-4" onSubmit={this.handleSubmit}>
+      <form className="p-4" onSubmit={this.handleSubmit.bind(this)}>
         <h1 className="text-center">User Register</h1>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
             type="email"
             className="form-control"
-            onChange={this.handleChange}
+            onChange={this.handleChange.bind(this)}
             value={this.state.email}
             name="email"
             placeholder="Email"
@@ -50,7 +47,7 @@ class RegisterForm extends Component {
           <input
           type="password"
           className="form-control"
-          onChange={this.handleChange}
+          onChange={this.handleChange.bind(this)}
           value={this.state.password}
           name="password"
           placeholder="Password" />

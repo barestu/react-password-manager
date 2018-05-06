@@ -5,11 +5,15 @@
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^4.13.1",
+    "logger": "0.0.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "sweetalert": "^2.1.0"
   },
   "scripts": {

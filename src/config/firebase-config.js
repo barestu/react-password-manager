@@ -8,6 +8,8 @@ const config = {
   storageBucket: "h8-phase3.appspot.com",
   messagingSenderId: "488782270777"
 }
+
 firebase.initializeApp(config)
 
 export const auth = firebase.auth()
+export const db = firebase.database()

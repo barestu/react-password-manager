@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
-import { auth } from './firebase-config'
-import Home from './Views/Home'
-import NavBar from './Components/NavBar';
+import { auth } from './config/firebase-config'
+import Home from './views/Home'
+import NavBar from './components/NavBar';
 
 class App extends Component {
-  userLogout() {
-    auth.signOut()
-  }
-
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {

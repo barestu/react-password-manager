@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
-import RegisterForm from './RegisterForm';
-import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm'
+import LoginForm from './LoginForm'
+import { auth } from '../config/firebase-config'
 
 class NavBar extends Component {
+  userLogout() {
+    auth.signOut()
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg bg-primary">

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { auth } from '../firebase-config'
+import { auth } from '../config/firebase-config'
 
 class LoginForm extends Component {
   constructor() {
