@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { auth } from '../config/firebase-config'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { userLogin } from '../store/user/actions'
 
 class LoginForm extends Component {
   constructor() {
@@ -18,13 +20,7 @@ class LoginForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(response => {
-        console.info('Login success', response)
-      })
-      .catch(err => {
-        console.error('Login failed', err)
-      })
+    this.props.userLogin(this.state.email, this.state.password)
   }
 
   render() {
@@ -60,4 +56,11 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  userLogin
+}, dispatch)
+
+export default connect(
+    null,
+    mapDispatchToProps
+  )(LoginForm);

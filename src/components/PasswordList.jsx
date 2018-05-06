@@ -5,16 +5,12 @@ import { loadData } from '../store/passman/actions'
 import PasswordItem from './PasswordItem';
 
 class PasswordList extends Component {
-  componentDidMount() {
-    this.props.loadData()
-  }
-
   render() {
     let { data, loading, error } = this.props.data
     let passData = data.map((pass, index) => 
-      <PasswordItem data={pass} index={index}/>
+      <PasswordItem data={pass} index={index} key={index}/>
     )
-
+    
     return (
       <table className="table">
         <thead>
@@ -40,7 +36,8 @@ class PasswordList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.passman
+  data: state.passman,
+  userId: state.user.userData.id
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

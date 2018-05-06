@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { auth } from '../config/firebase-config'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { userRegister } from '../store/user/actions'
 
 class RegisterForm extends Component {
   constructor() {
@@ -18,13 +20,7 @@ class RegisterForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(response => {
-        console.info('Register success', response)
-      })
-      .catch(err => {
-        console.error('Register failed', err)
-      })
+    this.props.userRegister(this.state.email, this.state.password)
   }
 
   render() {
@@ -60,4 +56,11 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  userRegister
+}, dispatch)
+
+export default connect(
+    null,
+    mapDispatchToProps
+  )(RegisterForm)

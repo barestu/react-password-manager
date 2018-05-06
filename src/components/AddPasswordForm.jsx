@@ -21,7 +21,9 @@ class AddPasswordForm extends Component {
   
   handleSubmit(e) {
     e.preventDefault()
-    this.props.inputData(this.state)
+    let userId = this.props.userId
+    let data = this.state
+    this.props.inputData(userId, data)
   }
 
   render() {
@@ -68,11 +70,16 @@ class AddPasswordForm extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLogin: state.user.isLogin,
+  userId: state.user.userData.id
+})
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   inputData
 }, dispatch)
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(AddPasswordForm);

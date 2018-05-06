@@ -1,17 +1,19 @@
 import { db } from '../../config/firebase-config'
 import firebase from 'firebase'
+import swal from 'sweetalert'
 import {
   LOAD_PASSMAN_DATA_DONE,
   LOAD_PASSMAN_DATA_LOADING,
   LOAD_PASSMAN_DATA_ERROR,
-  INPUT_PASSMAN_DATA
+  INPUT_PASSMAN_DATA,
+  SHOW_PASSMAN_DATA,
+  HIDE_PASSMAN_DATA
 } from './action.types'
-import swal from 'sweetalert'
 
-export const loadData = (data) => {
+export const loadData = (userId, data) => {
   return dispatch => {
     dispatch(loadDataLoading())
-    db.ref  (`password`).on('value', data => {
+    db.ref(`password/${userId}`).on('value', data => {
       let dataPass = data.val()
       let arrPass = []
 
@@ -45,7 +47,7 @@ const loadDataError = (error) => ({
   payload: error.message
 })
 
-export const inputData = (data) => {
+export const inputData = (userId, data) => {
   data = {
     ...data,
     createdAt: firebase.database.ServerValue.TIMESTAMP,
@@ -53,15 +55,37 @@ export const inputData = (data) => {
   }
 
   return dispatch => {
-    db.ref(`password`).push(data)
+    db.ref(`password/${userId}`).push(data)
       .then(result => {
         swal('Add Password success!', '', 'success')
-        dispatch(() => ({
-          type: INPUT_PASSMAN_DATA
-        }))
+        dispatch(inputDataDone())
       })
       .catch(err => {
         console.error(err)
       })
   }
 }
+
+const inputDataDone = () => ({
+  type: INPUT_PASSMAN_DATA
+})
+
+export const showPassword = () => {
+  return dispatch => {
+    dispatch(showPasswordDone())
+  }
+}
+
+const showPasswordDone = () => ({
+  type: SHOW_PASSMAN_DATA
+})
+
+export const hidePassword = () => {
+  return dispatch => {
+    dispatch(hidePasswordDone())
+  }
+}
+
+const hidePasswordDone = () => ({
+  type: HIDE_PASSMAN_DATA
+})
