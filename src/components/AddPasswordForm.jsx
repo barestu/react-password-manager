@@ -16,8 +16,7 @@ class AddPasswordForm extends Component {
       containLowercase: false,
       containSpecialChar: false,
       containNumber: false,
-      containMinLength: false,
-
+      containMinLength: false
     }
   }
 
@@ -62,7 +61,7 @@ class AddPasswordForm extends Component {
 
   render() {
     return (
-      <form className="p4" onSubmit={this.handleSubmit.bind(this)}>
+      <form className="p-4" onSubmit={this.handleSubmit.bind(this)}>
         <h1 className="text-center">Add New Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
@@ -103,8 +102,8 @@ class AddPasswordForm extends Component {
           containNumber={this.state.containNumber}
           containMinLength={this.state.containMinLength}
         />
-        <div className="form-group">
-          <button className="btn btn-secondary">Submit</button>
+        <div className="form-group text-center">
+          <button className="btn btn-secondary">Add Data</button>
         </div>
       </form>
     );

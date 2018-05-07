@@ -4,11 +4,14 @@ import {
   LOAD_PASSMAN_DATA_ERROR,
   INPUT_PASSMAN_DATA,
   SHOW_PASSMAN_DATA,
-  HIDE_PASSMAN_DATA
+  HIDE_PASSMAN_DATA,
+  SEARCH_PASSMAN_DATA
 } from './action.types'
 
 const initialState = {
   data: [],
+  filtered: [],
+  searchKey: '',
   loading: false,
   error: {
     status: false,
@@ -39,6 +42,18 @@ const passmanReducers = (state = {...initialState}, action) => {
         ...state,
         loading: false,
         error: {...errObj}
+      }
+    case SEARCH_PASSMAN_DATA:
+      let searchResult = []
+
+      if (action.payload !== '') {
+        searchResult = state.data.filter(result => result.url.includes(action.payload))
+      }
+
+      return {
+        ...state,
+        searchKey: action.payload,
+        filtered: searchResult
       }
     case INPUT_PASSMAN_DATA:
       return {

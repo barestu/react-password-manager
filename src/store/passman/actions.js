@@ -7,7 +7,8 @@ import {
   LOAD_PASSMAN_DATA_ERROR,
   INPUT_PASSMAN_DATA,
   SHOW_PASSMAN_DATA,
-  HIDE_PASSMAN_DATA
+  HIDE_PASSMAN_DATA,
+  SEARCH_PASSMAN_DATA
 } from './action.types'
 
 export const loadData = (userId, data) => {
@@ -33,23 +34,15 @@ export const loadData = (userId, data) => {
   }
 }
 
-const loadDataDone = (data) => ({
-  type: LOAD_PASSMAN_DATA_DONE,
-  payload: data
-})
-
-const loadDataLoading = () => ({
-  type: LOAD_PASSMAN_DATA_LOADING
-})
-
-const loadDataError = (error) => ({
-  type: LOAD_PASSMAN_DATA_ERROR,
-  payload: error.message
+export const searchData = (searchKey) => ({
+  type: SEARCH_PASSMAN_DATA,
+  payload: searchKey
 })
 
 export const inputData = (userId, data) => {
   data = {
     ...data,
+    userId: userId,
     passHidden: true,
     createdAt: firebase.database.ServerValue.TIMESTAMP,
     updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -67,10 +60,6 @@ export const inputData = (userId, data) => {
   }
 }
 
-const inputDataDone = () => ({
-  type: INPUT_PASSMAN_DATA
-})
-
 export const showPassword = (userId, passData) => {
   return dispatch => {
     let passId = passData.id
@@ -86,10 +75,6 @@ export const showPassword = (userId, passData) => {
   }
 }
 
-const showPasswordDone = () => ({
-  type: SHOW_PASSMAN_DATA
-})
-
 export const hidePassword = (userId, passData) => {
   return dispatch => {
     let passId = passData.id
@@ -104,6 +89,28 @@ export const hidePassword = (userId, passData) => {
       })
   }
 }
+
+const loadDataDone = (data) => ({
+  type: LOAD_PASSMAN_DATA_DONE,
+  payload: data
+})
+
+const loadDataLoading = () => ({
+  type: LOAD_PASSMAN_DATA_LOADING
+})
+
+const loadDataError = (error) => ({
+  type: LOAD_PASSMAN_DATA_ERROR,
+  payload: error.message
+})
+
+const inputDataDone = () => ({
+  type: INPUT_PASSMAN_DATA
+})
+
+const showPasswordDone = () => ({
+  type: SHOW_PASSMAN_DATA
+})
 
 const hidePasswordDone = () => ({
   type: HIDE_PASSMAN_DATA
