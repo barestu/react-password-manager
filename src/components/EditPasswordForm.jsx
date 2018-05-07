@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { inputData } from '../store/passman/actions'
+import { editData } from '../store/passman/actions'
 import PasswordWidgets from './PasswordWidgets';
 
-class AddPasswordForm extends Component {
+class EditPasswordForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -18,6 +18,15 @@ class AddPasswordForm extends Component {
       containNumber: false,
       containMinLength: false
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      url: this.props.data.url,
+      username: this.props.data.username,
+      password: this.props.data.password
+    })
   }
 
   handleValidation(typed) {
@@ -43,17 +52,7 @@ class AddPasswordForm extends Component {
     })
   }
 
-  clearState() {
-    this.setState({
-      ...this.state,
-      url: '',
-      username: '',
-      email: '',
-      password: ''
-    })
-  }
-
-  handleChange(e) {
+  handleChange = (e) => {
     let typed = e.target.value
     this.setState({
       [e.target.name]: e.target.value
@@ -62,24 +61,29 @@ class AddPasswordForm extends Component {
     })
   }
   
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     let userId = this.props.userId
-    let data = this.state
-    this.props.inputData(userId, data)
-    this.clearState()
+    let data = {
+      ...this.props.data,
+      url: this.state.url,
+      username: this.state.username,
+      password: this.state.password
+    }
+    console.log('DATA1', data)
+    this.props.editData(userId, data)
   }
 
   render() {
     return (
-      <form className="p-4" onSubmit={this.handleSubmit.bind(this)}>
+      <form className="p-4" onSubmit={this.handleSubmit}>
         <h1 className="text-center">Add New Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
           <input
             type="text"
             className="form-control"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             value={this.state.url}
             name="url"
             placeholder="URL"
@@ -90,7 +94,7 @@ class AddPasswordForm extends Component {
           <input
             type="text"
             className="form-control"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             value={this.state.username}
             name="username"
             placeholder="Username/Email"
@@ -101,21 +105,23 @@ class AddPasswordForm extends Component {
           <input
           type="password"
           className="form-control"
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           value={this.state.password}
           name="password"
           placeholder="Password" />
         </div>
         {
-          this.state.password.length > 0 ?
+          this.state.validPassword ?
           <PasswordWidgets
-            containLowercase={this.state.containLowercase}
-            containUppercase={this.state.containUppercase}
-            containSpecialChar={this.state.containSpecialChar}
-            containNumber={this.state.containNumber}
-            containMinLength={this.state.containMinLength}
+          containLowercase={this.state.containLowercase}
+          containUppercase={this.state.containUppercase}
+          containSpecialChar={this.state.containSpecialChar}
+          containNumber={this.state.containNumber}
+          containMinLength={this.state.containMinLength}
           /> :
-          <div className="alert alert-info" role="alert">Password required</div>
+          this.state.password.length > 0 ?
+          <div className="alert alert-info" role="alert">Password valid</div> :
+          <div className="alert alert-danger" role="alert">Password required</div>
         }
         <div className="form-group text-center">
           <button className="btn btn-secondary">Add Data</button>
@@ -131,10 +137,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  inputData
+  editData
 }, dispatch)
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(AddPasswordForm);
+  )(EditPasswordForm);

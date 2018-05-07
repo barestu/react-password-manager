@@ -8,13 +8,15 @@ import {
   INPUT_PASSMAN_DATA,
   SHOW_PASSMAN_DATA,
   HIDE_PASSMAN_DATA,
-  SEARCH_PASSMAN_DATA
+  SEARCH_PASSMAN_DATA,
+  DELETE_PASSMAN_DATA,
+  EDIT_PASSMAN_DATA
 } from './action.types'
 
 export const loadData = (userId, data) => {
   return dispatch => {
     dispatch(loadDataLoading())
-    db.ref(`password/${userId}`).on('value', data => {
+    db.ref(`passmanData/${userId}`).on('value', data => {
       let dataPass = data.val()
       let arrPass = []
 
@@ -49,7 +51,8 @@ export const inputData = (userId, data) => {
   }
 
   return dispatch => {
-    db.ref(`password/${userId}`).push(data)
+    db.ref(`passmanData/${userId}`)
+      .push(data)
       .then(result => {
         swal('Add Password success!', '', 'success')
         dispatch(inputDataDone())
@@ -60,11 +63,52 @@ export const inputData = (userId, data) => {
   }
 }
 
+export const editData = (userId, data) => {
+  return dispatch => {
+    let passId = data.id
+
+    db.ref(`passmanData/${userId}/${passId}`)
+      .update(data)
+      .then(result => {
+        swal('Edit Password success!', '', 'success')
+        dispatch(editDataDone())
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+export const deleteData = (userId, passId) => {
+  return dispatch => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover the data!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    })
+      .then(willDelete => {
+        if (willDelete) {
+          db.ref(`passmanData/${userId}/${passId}`)
+            .remove()
+            .then(result => {
+              dispatch(deleteDataDone())
+              swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+              })
+            })
+            .catch(err => console.error(err))
+        }
+      })
+  }
+}
+
 export const showPassword = (userId, passData) => {
   return dispatch => {
     let passId = passData.id
 
-    db.ref(`password/${userId}/${passId}`)
+    db.ref(`passmanData/${userId}/${passId}`)
       .update(passData)
       .then(result => {
         dispatch(showPasswordDone())
@@ -79,7 +123,7 @@ export const hidePassword = (userId, passData) => {
   return dispatch => {
     let passId = passData.id
 
-    db.ref(`password/${userId}/${passId}`)
+    db.ref(`passmanData/${userId}/${passId}`)
       .update(passData)
       .then(result => {
         dispatch(hidePasswordDone())
@@ -106,6 +150,14 @@ const loadDataError = (error) => ({
 
 const inputDataDone = () => ({
   type: INPUT_PASSMAN_DATA
+})
+
+const editDataDone = () => ({
+  type: EDIT_PASSMAN_DATA
+})
+
+const deleteDataDone = () => ({
+  type: DELETE_PASSMAN_DATA
 })
 
 const showPasswordDone = () => ({

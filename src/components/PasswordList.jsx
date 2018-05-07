@@ -15,8 +15,9 @@ class PasswordList extends Component {
   handleSearch(e) {
     this.setState({
       [e.target.name]: e.target.value
+    }, () => {
+      this.props.searchData(this.state.searchKey)
     })
-    this.props.searchData(this.state.searchKey)
   }
 
   render() {

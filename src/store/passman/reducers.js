@@ -5,7 +5,9 @@ import {
   INPUT_PASSMAN_DATA,
   SHOW_PASSMAN_DATA,
   HIDE_PASSMAN_DATA,
-  SEARCH_PASSMAN_DATA
+  SEARCH_PASSMAN_DATA,
+  DELETE_PASSMAN_DATA,
+  EDIT_PASSMAN_DATA
 } from './action.types'
 
 const initialState = {
@@ -56,6 +58,14 @@ const passmanReducers = (state = {...initialState}, action) => {
         filtered: searchResult
       }
     case INPUT_PASSMAN_DATA:
+      return {
+        ...state
+      }
+    case EDIT_PASSMAN_DATA:
+      return {
+        ...state
+      }
+    case DELETE_PASSMAN_DATA:
       return {
         ...state
       }

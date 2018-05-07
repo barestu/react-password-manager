@@ -18,9 +18,18 @@ class LoginForm extends Component {
     })
   }
 
+  clearState() {
+    this.setState({
+      ...this.state,
+      email: '',
+      password: ''
+    })
+  }
+
   handleSubmit(e) {
     e.preventDefault()
     this.props.userLogin(this.state.email, this.state.password)
+    this.clearState()
   }
 
   render() {
