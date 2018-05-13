@@ -75,6 +75,10 @@ describe('<NavBar/>', () => {
       expect(registerForm.state('password')).toBe('konde123')
     });
 
+    it('onSubmit should dispatch userRegister, then clearState', () => {
+      registerForm.find('#form').simulate('submit')
+    });
+
     it('clearState() should clear email & password state', () => {
       registerForm.find('#email').simulate('change', {
         target: { name: 'email', value: 'test@email.com'}
