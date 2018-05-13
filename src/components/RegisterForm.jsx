@@ -44,7 +44,7 @@ export class RegisterForm extends Component {
             value={this.state.email}
             name="email"
             placeholder="Email"
-            id="email"
+            id="registerEmail"
           />
         </div>
         <div className="form-group">
@@ -56,7 +56,7 @@ export class RegisterForm extends Component {
             value={this.state.password}
             name="password"
             placeholder="Password"
-            id="password"
+            id="registerPassword"
           />
         </div>
         <div className="form-group">
@@ -72,6 +72,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 export default connect(
-    null,
-    mapDispatchToProps
-  )(RegisterForm)
+  null,
+  mapDispatchToProps
+)(RegisterForm)

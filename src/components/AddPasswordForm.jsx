@@ -91,6 +91,7 @@ class AddPasswordForm extends Component {
             value={this.state.url}
             name="url"
             placeholder="URL"
+            id="url"
           />
         </div>
         <div className="form-group">
@@ -102,18 +103,20 @@ class AddPasswordForm extends Component {
             value={this.state.username}
             name="username"
             placeholder="Username/Email"
+            id="username"
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-          type="password"
-          className="form-control"
-          onChange={this.handleChange}
-          value={this.state.password}
-          id="password"
-          name="password"
-          placeholder="Password" />
+            type="password"
+            className="form-control"
+            onChange={this.handleChange}
+            value={this.state.password}
+            name="password"
+            placeholder="Password"
+            id="password"
+          />
         </div>
         {
           (password.length > 0) ?

@@ -45,7 +45,7 @@ export class LoginForm extends Component {
             value={this.state.email}
             name="email"
             placeholder="Email"
-            id="email"
+            id="loginEmail"
           />
         </div>
         <div className="form-group">
@@ -57,7 +57,7 @@ export class LoginForm extends Component {
             value={this.state.password}
             name="password"
             placeholder="Password"
-            id="password"
+            id="loginPassword"
           />
         </div>
         <div className="form-group">
