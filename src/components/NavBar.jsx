@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { userLogout, setLogin } from '../store/user/actions'
+import { userLogout } from '../store/user/actions'
 import RegisterForm from './RegisterForm'
 import LoginForm from './LoginForm'
 
 class NavBar extends Component {
-  componentDidMount() {
-    let token = localStorage.getItem('token')
-    if (token) {
-      this.props.setLogin()
-    }
-  }
-
   render() {
     let isLogin = this.props.isLogin
 
@@ -24,11 +17,6 @@ class NavBar extends Component {
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link text-light">Home</a>
-            </li>
-          </ul>
           <div className="mx-1  mr-auto">
           </div>
           {
@@ -68,8 +56,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  userLogout,
-  setLogin
+  userLogout
 }, dispatch)
 
 export default connect(

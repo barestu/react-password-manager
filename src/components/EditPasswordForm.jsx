@@ -22,10 +22,7 @@ class EditPasswordForm extends Component {
 
   componentDidMount() {
     this.setState({
-      ...this.state,
-      url: this.props.data.url,
-      username: this.props.data.username,
-      password: this.props.data.password
+      ...this.props.data
     })
   }
 
@@ -53,10 +50,10 @@ class EditPasswordForm extends Component {
   }
 
   handleChange = (e) => {
-    let typed = e.target.value
     this.setState({
       [e.target.name]: e.target.value
     }, () => {
+      let typed = this.state.password
       this.handleValidation(typed)
     })
   }
@@ -70,14 +67,21 @@ class EditPasswordForm extends Component {
       username: this.state.username,
       password: this.state.password
     }
-    console.log('DATA1', data)
-    this.props.editData(userId, data)
+
+    if (this.state.validPassword) {
+      this.props.editData(userId, data)
+      document.querySelector(`#pass${this.props.data.id}`).classList.remove('is-invalid')
+    } else {
+      document.querySelector(`#pass${this.props.data.id}`).classList.add('is-invalid')
+    }
   }
 
   render() {
+    let password = this.state.password
+
     return (
       <form className="p-4" onSubmit={this.handleSubmit}>
-        <h1 className="text-center">Add New Password</h1>
+        <h1 className="text-center">Edit Data Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
           <input
@@ -107,24 +111,28 @@ class EditPasswordForm extends Component {
           className="form-control"
           onChange={this.handleChange}
           value={this.state.password}
+          id={"pass"+this.props.data.id}
           name="password"
           placeholder="Password" />
         </div>
         {
-          this.state.validPassword ?
+          (password.length > 0) ?
           <PasswordWidgets
-          containLowercase={this.state.containLowercase}
-          containUppercase={this.state.containUppercase}
-          containSpecialChar={this.state.containSpecialChar}
-          containNumber={this.state.containNumber}
-          containMinLength={this.state.containMinLength}
+            validPassword={this.state.validPassword}
+            containLowercase={this.state.containLowercase}
+            containUppercase={this.state.containUppercase}
+            containSpecialChar={this.state.containSpecialChar}
+            containNumber={this.state.containNumber}
+            containMinLength={this.state.containMinLength}
           /> :
-          this.state.password.length > 0 ?
-          <div className="alert alert-info" role="alert">Password valid</div> :
-          <div className="alert alert-danger" role="alert">Password required</div>
+          (password.length === 0 ) ?
+          <div className="alert alert-warning" role="alert">
+            <span className="text-bold">Password required!</span>
+          </div> :
+          <div/>
         }
         <div className="form-group text-center">
-          <button className="btn btn-secondary">Add Data</button>
+          <button className="btn btn-secondary">Edit Data</button>
         </div>
       </form>
     );

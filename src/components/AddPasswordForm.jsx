@@ -53,33 +53,41 @@ class AddPasswordForm extends Component {
     })
   }
 
-  handleChange(e) {
-    let typed = e.target.value
+  handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     }, () => {
+      let typed = this.state.password
       this.handleValidation(typed)
     })
   }
   
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     let userId = this.props.userId
     let data = this.state
-    this.props.inputData(userId, data)
-    this.clearState()
+
+    if (this.state.validPassword) {
+      this.props.inputData(userId, data)
+      this.clearState()
+      document.querySelector('#password').classList.remove('is-invalid')
+    } else {
+      document.querySelector('#password').classList.add('is-invalid')
+    }
   }
 
   render() {
+    let password = this.state.password
+
     return (
-      <form className="p-4" onSubmit={this.handleSubmit.bind(this)}>
+      <form className="p-4" onSubmit={this.handleSubmit}>
         <h1 className="text-center">Add New Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
           <input
             type="text"
             className="form-control"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             value={this.state.url}
             name="url"
             placeholder="URL"
@@ -90,7 +98,7 @@ class AddPasswordForm extends Component {
           <input
             type="text"
             className="form-control"
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             value={this.state.username}
             name="username"
             placeholder="Username/Email"
@@ -101,21 +109,27 @@ class AddPasswordForm extends Component {
           <input
           type="password"
           className="form-control"
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           value={this.state.password}
+          id="password"
           name="password"
           placeholder="Password" />
         </div>
         {
-          this.state.password.length > 0 ?
+          (password.length > 0) ?
           <PasswordWidgets
+            validPassword={this.state.validPassword}
             containLowercase={this.state.containLowercase}
             containUppercase={this.state.containUppercase}
             containSpecialChar={this.state.containSpecialChar}
             containNumber={this.state.containNumber}
             containMinLength={this.state.containMinLength}
           /> :
-          <div className="alert alert-info" role="alert">Password required</div>
+          (password.length === 0 ) ?
+          <div className="alert alert-warning" role="alert">
+            <span className="font-weight-bold">Password required!</span>
+          </div> :
+          <div/>
         }
         <div className="form-group text-center">
           <button className="btn btn-secondary">Add Data</button>

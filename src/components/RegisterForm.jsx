@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userRegister } from '../store/user/actions'
 
-class RegisterForm extends Component {
+export class RegisterForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -18,14 +18,22 @@ class RegisterForm extends Component {
     })
   }
 
+  clearState() {
+    this.setState({
+      email: '',
+      password: ''
+    })
+  }
+
   handleSubmit(e) {
     e.preventDefault()
     this.props.userRegister(this.state.email, this.state.password)
+    this.clearState()
   }
 
   render() {
     return (
-      <form className="p-4" onSubmit={this.handleSubmit.bind(this)}>
+      <form id="form" className="p-4" onSubmit={this.handleSubmit.bind(this)}>
         <h1 className="text-center">User Register</h1>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
@@ -36,20 +44,23 @@ class RegisterForm extends Component {
             value={this.state.email}
             name="email"
             placeholder="Email"
+            id="email"
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-          type="password"
-          className="form-control"
-          onChange={this.handleChange.bind(this)}
-          value={this.state.password}
-          name="password"
-          placeholder="Password" />
+            type="password"
+            className="form-control"
+            onChange={this.handleChange.bind(this)}
+            value={this.state.password}
+            name="password"
+            placeholder="Password"
+            id="password"
+          />
         </div>
         <div className="form-group">
-          <button className="btn btn-secondary">Register</button>
+          <button type="submit" id="button" className="btn btn-secondary">Register</button>
         </div>
       </form>
     );

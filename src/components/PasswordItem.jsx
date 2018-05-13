@@ -4,6 +4,7 @@ import { bindActionCreators} from 'redux'
 import { auth } from '../config/firebase-config'
 import { deleteData, showPassword, hidePassword} from '../store/passman/actions'
 import EditPasswordForm from '../components/EditPasswordForm'
+import '../style.css';
 
 class PasswordItem extends Component {
   constructor() {
@@ -93,10 +94,17 @@ class PasswordItem extends Component {
           <td>{this.formatDate(this.props.data.createdAt)}</td>
           <td>{this.formatDate(this.props.data.updatedAt)}</td>
           <td>
-            <button data-toggle="modal" data-target={"#secure"+this.props.data.id}>Show</button>
-            <button data-toggle="modal" data-target={"#editPassForm"+this.props.data.id}>Edit</button>
-            <button onClick={this.deletePassword.bind(this)}>Delete</button>
-
+            <a data-toggle="modal"
+              data-target={"#secure"+this.props.data.id}>
+              <span className="fa fa-eye fa-lg mx-1" />
+            </a>
+            <a data-toggle="modal"
+              data-target={"#editPassForm"+this.props.data.id}>
+              <span className="fa fa-edit fa-lg mx-1" />
+            </a>
+            <a onClick={this.deletePassword.bind(this)}>
+              <span className="fa fa-trash fa-lg mx-1" />
+            </a>
             <div className="modal fade" id={"editPassForm"+this.props.data.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">

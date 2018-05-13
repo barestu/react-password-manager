@@ -2,15 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loadData } from '../store/passman/actions'
+import { setLogin } from '../store/user/actions';
 import PasswordList from '../components/PasswordList'
 import AddPasswordForm from '../components/AddPasswordForm'
 
 class Home extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      let userId = this.props.userId
-      this.props.loadData(userId)
-    }, 1000)
+  componentWillMount() {
+    let token = localStorage.getItem('token')
+    if (token) {
+      this.props.setLogin()
+    }
+  }
+
+  componentDidUpdate() {
+    let userId = this.props.userId
+    this.props.loadData(userId)
   }
 
   render() {
@@ -28,7 +34,7 @@ class Home extends Component {
             <div className="text-center">
               <button className="btn btn-primary my-2" data-toggle="modal" data-target="#addPassForm">Add Password</button>
             </div>
-            <div className="modal fade" id="addPassForm" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="addPassForm" tabIndex="-1" role="dialog">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
                   <AddPasswordForm/>
@@ -52,7 +58,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  loadData
+  loadData,
+  setLogin
 }, dispatch)
 
 export default connect(

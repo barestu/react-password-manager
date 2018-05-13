@@ -12,6 +12,7 @@ export const userRegister = (email, password) => {
     auth.createUserWithEmailAndPassword(email, password)
       .then(result => {
         swal('Register success!', '', 'success')
+        // closeModal()
         dispatch(userRegisterDone())
       })
       .catch(err => {
@@ -80,3 +81,10 @@ export const userLogout = () => {
 const userLogoutDone = () => ({
   type: USER_LOGOUT
 })
+
+// function closeModal() {
+//   document.querySelector('.modal').classList.remove('show')
+//   document.querySelector('body').classList.remove('modal-open')
+//   document.querySelector('.modal-backdrop').remove()
+//   document.querySelector('.modal').style.display('none')
+// }

@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: 'Nunito', sans-serif;
 }
+
+.fa {
+  color: darkblue;
+}
+
+.fa:hover {
+  color: blue;
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogin } from '../store/user/actions'
 
-class LoginForm extends Component {
+export class LoginForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -45,17 +45,20 @@ class LoginForm extends Component {
             value={this.state.email}
             name="email"
             placeholder="Email"
+            id="email"
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-          type="password"
-          className="form-control"
-          onChange={this.handleChange.bind(this)}
-          value={this.state.password}
-          name="password"
-          placeholder="Password" />
+            type="password"
+            className="form-control"
+            onChange={this.handleChange.bind(this)}
+            value={this.state.password}
+            name="password"
+            placeholder="Password"
+            id="password"
+          />
         </div>
         <div className="form-group">
           <button className="btn btn-primary">Login</button>

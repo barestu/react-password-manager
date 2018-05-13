@@ -55,6 +55,7 @@ export const inputData = (userId, data) => {
       .push(data)
       .then(result => {
         swal('Add Password success!', '', 'success')
+        closeModal()
         dispatch(inputDataDone())
       })
       .catch(err => {
@@ -167,3 +168,10 @@ const showPasswordDone = () => ({
 const hidePasswordDone = () => ({
   type: HIDE_PASSMAN_DATA
 })
+
+function closeModal() {
+  document.querySelector('#addPassForm').classList.remove('show')
+  document.querySelector('body').classList.remove('modal-open')
+  document.querySelector('.modal-backdrop').remove()
+  document.querySelector('#addPassForm').style.display('none')
+}
