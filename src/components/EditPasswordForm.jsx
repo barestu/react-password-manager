@@ -80,7 +80,7 @@ class EditPasswordForm extends Component {
     let password = this.state.password
 
     return (
-      <form className="p-4" onSubmit={this.handleSubmit}>
+      <form id="editData" className="p-4" onSubmit={this.handleSubmit}>
         <h1 className="text-center">Edit Data Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
@@ -91,6 +91,7 @@ class EditPasswordForm extends Component {
             value={this.state.url}
             name="url"
             placeholder="URL"
+            id="editUrl"
           />
         </div>
         <div className="form-group">
@@ -102,18 +103,20 @@ class EditPasswordForm extends Component {
             value={this.state.username}
             name="username"
             placeholder="Username/Email"
+            id="editUsername"
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-          type="password"
-          className="form-control"
-          onChange={this.handleChange}
-          value={this.state.password}
-          id={"pass"+this.props.data.id}
-          name="password"
-          placeholder="Password" />
+            type="password"
+            className="form-control"
+            onChange={this.handleChange}
+            value={this.state.password}
+            id={"pass"+this.props.data.id}
+            name="password"
+            placeholder="Password"
+          />
         </div>
         {
           (password.length > 0) ?
@@ -132,7 +135,7 @@ class EditPasswordForm extends Component {
           <div/>
         }
         <div className="form-group text-center">
-          <button className="btn btn-secondary">Edit Data</button>
+          <button type="submit" className="btn btn-secondary">Edit Data</button>
         </div>
       </form>
     );

@@ -16,8 +16,8 @@ export const userRegister = (email, password) => {
         dispatch(userRegisterDone())
       })
       .catch(err => {
+        // swal('Register failed', '', 'error')
         console.error('Register failed', err)
-        swal('Register failed', '', 'danger')
       })
   }
 }

@@ -65,7 +65,12 @@ class AddPasswordForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     let userId = this.props.userId
-    let data = this.state
+    // let data = this.state
+    let data = {
+      url: this.state.url,
+      username: this.state.username,
+      password: this.state.password
+    }
 
     if (this.state.validPassword) {
       this.props.inputData(userId, data)
@@ -80,7 +85,7 @@ class AddPasswordForm extends Component {
     let password = this.state.password
 
     return (
-      <form className="p-4" onSubmit={this.handleSubmit}>
+      <form id="inputData" className="p-4" onSubmit={this.handleSubmit}>
         <h1 className="text-center">Add New Password</h1>
         <div className="form-group">
           <label htmlFor="email">URL</label>
@@ -91,7 +96,7 @@ class AddPasswordForm extends Component {
             value={this.state.url}
             name="url"
             placeholder="URL"
-            id="url"
+            id="inputUrl"
           />
         </div>
         <div className="form-group">
@@ -103,7 +108,7 @@ class AddPasswordForm extends Component {
             value={this.state.username}
             name="username"
             placeholder="Username/Email"
-            id="username"
+            id="inputUsername"
           />
         </div>
         <div className="form-group">
@@ -115,7 +120,7 @@ class AddPasswordForm extends Component {
             value={this.state.password}
             name="password"
             placeholder="Password"
-            id="password"
+            id="inputPassword"
           />
         </div>
         {

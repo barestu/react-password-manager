@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userRegister } from '../store/user/actions'
 
-export class RegisterForm extends Component {
+class RegisterForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -33,7 +33,7 @@ export class RegisterForm extends Component {
 
   render() {
     return (
-      <form id="form" className="p-4" onSubmit={this.handleSubmit.bind(this)}>
+      <form id="registerForm" className="p-4" onSubmit={this.handleSubmit.bind(this)}>
         <h1 className="text-center">User Register</h1>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>

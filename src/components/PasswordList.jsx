@@ -28,7 +28,7 @@ class PasswordList extends Component {
     )
     
     return (
-      <div>
+      <div id="passwordList">
         <div className="my-2 col-4">
           <input
             onChange={this.handleSearch.bind(this)}
@@ -37,9 +37,10 @@ class PasswordList extends Component {
             className="form-control my-2"
             type="search"
             placeholder="Search By URL"
+            id="searchPassword"
           />
         </div>
-        <table className="table">
+        <table className="table"id="tablePassword">
           <thead>
             <tr>
               <th>#</th>
